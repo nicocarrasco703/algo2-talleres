@@ -1,3 +1,5 @@
+#include "Periodo.h"
+
 // Typedef
 typedef int Anio;
 typedef int Mes;
@@ -105,35 +107,6 @@ bool Fecha::operator<(Fecha o) const {
 
 bool operator!=(Fecha f1, Fecha f2) {
   return not (f1 == f2);
-}
-
-class Periodo {
- public:
-  Periodo(int anios, int meses, int dias);
-
-  int anios() const;
-  int meses() const;
-  int dias() const;
-
- private:
-  int anios_;
-  int meses_;
-  int dias_;
-};
-
-Periodo::Periodo(int anios, int meses, int dias) : anios_(anios), 
-    meses_(meses), dias_(dias) {};
-
-int Periodo::anios() const {
-  return anios_;
-}
-
-int Periodo::meses() const {
-  return meses_;
-}
-
-int Periodo::dias() const {
-  return dias_;
 }
 
 void Fecha::ajustar_fecha() {
