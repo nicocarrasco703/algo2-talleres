@@ -10,11 +10,11 @@ add_library(gtest STATIC tests/gtest-1.8.1/gtest-all.cc)
 add_library(gtest_main STATIC tests/gtest-1.8.1/gtest_main.cc)
 
 # Creamos el ejecutable para correr los tests
-add_executable(ej1 tests/ej1_periodo.cpp src/Periodo.cpp)
+add_executable(ej1 tests/ej1_periodo.cpp src/Periodo.cpp src/Meses.h src/Funciones.h)
 add_executable(ej2 tests/ej2_periodo_y_fecha.cpp
-               src/Periodo.cpp)
+               src/Periodo.cpp src/Meses.h src/Funciones.h)
 add_executable(ej3 tests/ej3_funciones.cpp
-               src/Funciones.cpp src/Periodo.cpp src/Fecha.cpp)
+               src/Funciones.cpp src/Periodo.cpp src/Fecha.cpp src/Meses.h src/Funciones.h)
 add_executable(solucion_testing tests/solucion_testing.cpp src/Truco.cpp
     src/Libreta.cpp)
 
