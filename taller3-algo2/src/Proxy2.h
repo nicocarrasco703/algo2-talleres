@@ -13,6 +13,7 @@ public:
 
 private:
     ConexionJugador** _conn;
+    ConexionJugador* _conne;
 
     // No puedo copiarlo
     Proxy(const Proxy&);

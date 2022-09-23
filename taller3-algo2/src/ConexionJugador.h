@@ -16,7 +16,7 @@ class ConexionJugador {
   private:
     string _ip;
 
-    Internet* _internet = &Internet::internet();
+    Internet* _internet = &Internet::internet(); //puntero al tipo Internet, tengo acceso a los metodos y variables privadas de la clase
 
 };
 

@@ -11,5 +11,5 @@ void ConexionJugador::enviarMensaje(string mensaje) {
 }
 
 void ConexionJugador::reasignar(string ip) {
-    _ip = ip;
+    _ip = ip; //variable privada del tipo
 }

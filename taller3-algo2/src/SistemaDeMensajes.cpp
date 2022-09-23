@@ -12,7 +12,7 @@ void SistemaDeMensajes::registrarJugador(int id, string ip) {
     if(_conns[id] == nullptr){
         _conns[id] = new ConexionJugador(ip);
     } else {
-        _conns[id]->reasignar(ip);
+        _conns[id] -> reasignar(ip); //llamo al metodo reasignar para asignar la nueva ip (variable privada del tipo) en la conexión id
     }
 }
 
@@ -33,8 +33,14 @@ void SistemaDeMensajes::desregistrarJugador(int id) {
     _conns[id] = nullptr;
 }
 
-Proxy* SistemaDeMensajes::obtenerProxy(int id) {
+/*Proxy* SistemaDeMensajes::obtenerProxy(int id) {
     Proxy* p = new Proxy(_conns[id]);
+    _proxys.push_back(p);
+    return p;
+}*/
+
+Proxy* SistemaDeMensajes::obtenerProxy(int id) {
+    Proxy* p = new Proxy(&_conns[id]);
     _proxys.push_back(p);
     return p;
 }

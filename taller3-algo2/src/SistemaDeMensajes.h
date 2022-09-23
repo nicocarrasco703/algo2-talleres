@@ -29,6 +29,8 @@ class SistemaDeMensajes {
 
     void desregistrarJugador(int id);
 
+    //Proxy* obtenerProxy(int id);
+
     Proxy* obtenerProxy(int id);
 
     ~SistemaDeMensajes();
@@ -36,7 +38,7 @@ class SistemaDeMensajes {
 
 
   private:
-    ConexionJugador* _conns[4];
+    ConexionJugador* _conns[4]; //puntero a el tipo ConexionJugador, tengo acceso a los metodos y variables privadas
     vector<Proxy*> _proxys;
 };
 
