@@ -1,6 +1,6 @@
 #include "Lista.h"
 
-Lista::Lista() {
+Lista::Lista() : longitud(0), prim(NULL), ult(NULL){
     // Completar
 }
 

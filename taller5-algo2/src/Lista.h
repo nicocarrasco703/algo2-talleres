@@ -88,10 +88,14 @@ public:
 private:
 
     struct Nodo {
-        // Completar
+        int dato;
+        Nodo* sig;
+        Nodo* ant;
     };
 
-    // Completar
+    Nodo* prim;
+    Nodo* ult;
+    Nat longitud;
 };
 
 #endif
