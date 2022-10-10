@@ -88,7 +88,6 @@ public:
 private:
 
     struct Nodo {
-<<<<<<< HEAD
         int valor;
         Nodo* sig;
         Nodo* ant;
@@ -100,16 +99,7 @@ private:
 
     void copiar(const Lista &l);
     void destruir();
-=======
-        int dato;
-        Nodo* sig;
-        Nodo* ant;
     };
 
-    Nodo* prim;
-    Nodo* ult;
-    Nat longitud;
->>>>>>> refs/remotes/origin/main
-};
 
 #endif
