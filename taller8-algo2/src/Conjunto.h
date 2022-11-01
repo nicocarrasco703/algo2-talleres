@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <string>
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -31,7 +32,7 @@ class Conjunto
 
         // Siguiente elemento al recibido por párametro, en orden.
         // Pre: el elemento está en el conjunto y no es el máximo del conjunto.
-        const T& siguiente(const T& elem);
+        const T& siguiente(const T& clave);
 
         // Devuelve el mínimo elemento del conjunto según <.
         const T& minimo() const;
@@ -45,29 +46,36 @@ class Conjunto
         // Muestra el conjunto.
         void mostrar(std::ostream&) const;
 
-    private:
 
-        /**
-         * Completar con lo que sea necesario...
-         **/
+    private:
 
         struct Nodo
         {
             // El constructor, toma el elemento al que representa el nodo.
-            Nodo(const T& v) : valor(v), izq(nullptr), der(nullptr){}
+            Nodo(const T& v) : valor(v), izq(nullptr), der(nullptr), padre(nullptr){}
             // El elemento al que representa el nodo.
             T valor;
             // Puntero a la raíz del subárbol izquierdo.
             Nodo* izq;
             // Puntero a la raíz del subárbol derecho.
-            Nodo* der; 
+            Nodo* der;
+
+            Nodo* padre;
         };
 
         // Puntero a la raíz de nuestro árbol.
         Nodo* _raiz;
 
+        // Cardinal del conjunto
         unsigned int _cardinal;
 
+        // Método privado para crear un vector inorder con los elementos del conjunto
+        vector<T> inorder();
+
+        // Método privado para encontrar el minimo de un subarbol
+        const T& minimoSub(Nodo* k) const;
+
+        void destruir(Nodo* elem);
 };
 
 template<class T>
