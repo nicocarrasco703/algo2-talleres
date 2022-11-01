@@ -1,3 +1,5 @@
+// Nombre: Nicolas Carrasco
+// LU: 1905/21
 
 template <class T>
 Conjunto<T>::Conjunto() : _raiz(nullptr), _cardinal(0) {
@@ -173,11 +175,11 @@ unsigned int Conjunto<T>::cardinal() const {
 
 template <class T>
 void Conjunto<T>::mostrar(std::ostream&) const {
-    assert(false);
+    return inorder();
 }
 
 template <class T>
-vector<T> Conjunto<T>::inorder() {
+void Conjunto<T>::inorder() const{
     stack<Nodo*> s;
     vector<T> res;
     Nodo* actual = this->_raiz;
@@ -188,7 +190,7 @@ vector<T> Conjunto<T>::inorder() {
         }
         actual = s.top(); //actual es el nodo de la punta de la pila
         s.pop(); // desapilo
-        res.push_back(actual->valor); //lo agrego al vector
+        cout << actual->valor << " "; //imprimo el valor
         actual = actual->der; //me voy a la derecha
     }
 }

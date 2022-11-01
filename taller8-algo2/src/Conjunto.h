@@ -1,3 +1,6 @@
+// Nombre: Nicolas Carrasco
+// LU: 1905/21
+
 #ifndef CONJUNTO_H_
 #define CONJUNTO_H_
 
@@ -70,11 +73,12 @@ class Conjunto
         unsigned int _cardinal;
 
         // Método privado para crear un vector inorder con los elementos del conjunto
-        vector<T> inorder();
+        void inorder() const;
 
         // Método privado para encontrar el minimo de un subarbol
         const T& minimoSub(Nodo* k) const;
 
+        // Metodo privado que funciona como auxiliar del destructor de la clase
         void destruir(Nodo* elem);
 };
 
