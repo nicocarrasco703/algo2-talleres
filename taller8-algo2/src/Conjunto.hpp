@@ -103,25 +103,9 @@ void Conjunto<T>::remover(const T& clave) {
             delete actual; //borramos el nodo
             _cardinal--;
         } else { // SI TIENE DOS HIJOS, buscamos el sucesor inmediato
-            Nodo *suc;
-            if (actual->der != nullptr) {
-                suc = actual->der;
-                while (suc->izq != nullptr) {
-                    suc = suc->izq;
-                }
-            } else {
-                if (actual->padre->izq == actual) {
-                    suc = actual->padre;
-                } else {
-                    suc = actual->padre;
-                    while (suc->padre->izq != suc) {
-                        suc = suc->padre;
-                    }
-                }
-            }
-            T temp = suc->valor; //guardamos temporalmente el valor del sucesor
-            remover(suc->valor); // se borra el nodo del sucesor
-            actual->valor = temp; // se copia el valor del sucesor al nodo que se quiere borrar
+            T suc = minimoSub(actual->der); //guardamos temporalmente el valor del sucesor
+            remover(suc); // se borra el nodo del sucesor
+            actual->valor = suc; // se copia el valor del sucesor al nodo que se quiere borrar
         }
     }
 
