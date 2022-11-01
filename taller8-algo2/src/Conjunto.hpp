@@ -85,23 +85,35 @@ void Conjunto<T>::remover(const T& clave) {
                 _cardinal--;
             }
         } else if (actual->izq != nullptr && actual->der == nullptr) { // SI TIENE SOLO UN HIJO IZQUIERDO
-            actual->izq->padre = actual->padre; // el nuevo padre de su hijo izquierdo será el padre del nodo borrado
-            if (actual == actual->padre->der) { //si el nodo borrado era hijo derecho
-                actual->padre->der = actual->izq;
-            } else { //si el nodo borrado era hijo izquierdo
-                actual->padre->izq = actual->izq;
+            if (actual != _raiz){
+                actual->izq->padre = actual->padre; // el nuevo padre de su hijo izquierdo será el padre del nodo borrado
+                if (actual == actual->padre->der) { //si el nodo borrado era hijo derecho
+                    actual->padre->der = actual->izq;
+                } else { //si el nodo borrado era hijo izquierdo
+                    actual->padre->izq = actual->izq;
+                }
+                delete actual; //borramos el nodo
+                _cardinal--;
+            } else {
+                _raiz = actual->izq;
+                delete actual;
+                _cardinal--;
             }
-            delete actual; //borramos el nodo
-            _cardinal--;
         } else if (actual->der != nullptr && actual->izq == nullptr) { // SI TIENE SOLO UN HIJO DERECHO
-            actual->der->padre = actual->padre; // el nuevo padre de su hijo derecho será el padre del nodo borrado
-            if (actual == actual->padre->der) { //si el nodo borrado era hijo derecho
-                actual->padre->der = actual->der;
-            } else { //si el nodo borrado era hijo izquierdo
-                actual->padre->izq = actual->der;
+            if (actual != _raiz){
+                actual->der->padre = actual->padre; // el nuevo padre de su hijo derecho será el padre del nodo borrado
+                if (actual == actual->padre->der) { //si el nodo borrado era hijo derecho
+                    actual->padre->der = actual->der;
+                } else { //si el nodo borrado era hijo izquierdo
+                    actual->padre->izq = actual->der;
+                }
+                delete actual; //borramos el nodo
+                _cardinal--;
+            } else{
+                _raiz = actual->der;
+                delete actual;
+                _cardinal--;
             }
-            delete actual; //borramos el nodo
-            _cardinal--;
         } else { // SI TIENE DOS HIJOS, buscamos el sucesor inmediato
             T suc = minimoSub(actual->der); //guardamos temporalmente el valor del sucesor
             remover(suc); // se borra el nodo del sucesor
