@@ -44,12 +44,33 @@ int string_map<T>::count(const string& clave) const{
 
 template <typename T>
 const T& string_map<T>::at(const string& clave) const {
-    // COMPLETAR
+    Nodo* actual = raiz;
+    int i = 0;
+    while(i < clave.size()){
+        int caracter = clave[i];
+        if (actual->siguientes[caracter] != nullptr){
+            actual = actual->siguientes[caracter];
+        }
+        i++;
+
+    }
+    const T res = actual->definicion;
+    return res;
 }
 
 template <typename T>
 T& string_map<T>::at(const string& clave) {
-    // COMPLETAR
+    Nodo* actual = raiz;
+    int i = 0;
+    while(i < clave.size()){
+        int caracter = clave[i];
+        if (actual->siguientes[caracter] != nullptr){
+            actual = actual->siguientes[caracter];
+        }
+        i++;
+
+    }
+    return actual->definicion;
 }
 
 template <typename T>
@@ -68,6 +89,25 @@ bool string_map<T>::empty() const{
 }
 
 template <typename T>
-void string_map<T>::insert(const pair<string, T>&){
-
+void string_map<T>::insert(const pair<string, T>& elem){
+    if (raiz == nullptr){ // si el trie no tiene raiz la creamos
+        Nodo* nuevo = new Nodo();
+        raiz = nuevo;
+    }
+    Nodo* actual = raiz;
+    string clave = get<0>(elem); //guardamos la clave para insertarla
+    T significado = get<1>(elem); //guardamos el significado
+    int i = 0;
+    while(i < clave.size()){
+        int caracter = clave[i];
+        if (actual->siguientes[caracter] == nullptr){ // si no habia un puntero al proximo caracter lo creamos y entramos
+            Nodo* nuevo = new Nodo();
+            actual->siguientes[caracter] = nuevo;
+            actual = nuevo;
+        } else { //si ya existia entramos
+            actual = actual->siguientes[caracter];
+        }
+        i++;
+    }
+    actual->definicion = significado; //salimos del ciclo al llegar al nodo de la ultima letra y agregamos en su definicion el significado
 };
