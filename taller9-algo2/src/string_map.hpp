@@ -70,9 +70,7 @@ const T& string_map<T>::at(const string& clave) const {
     int i = 0;
     while(i < clave.size()){
         int caracter = clave[i];
-        if (actual->siguientes[caracter] != nullptr){
-            actual = actual->siguientes[caracter];
-        }
+        actual = actual->siguientes[caracter];
         i++;
 
     }
@@ -86,9 +84,7 @@ T& string_map<T>::at(const string& clave) {
     int i = 0;
     while(i < clave.size()){
         int caracter = clave[i];
-        if (actual->siguientes[caracter] != nullptr){
-            actual = actual->siguientes[caracter];
-        }
+        actual = actual->siguientes[caracter];
         i++;
     }
     return *actual->definicion;
@@ -96,7 +92,27 @@ T& string_map<T>::at(const string& clave) {
 
 template <typename T>
 void string_map<T>::erase(const string& clave) {
-    // COMPLETAR
+    Nodo* actual = raiz;
+    int i = 0;
+    while(i < clave.size()){ //buscamos el nodo a borrar
+        int caracter = clave[i];
+        actual = actual->siguientes[caracter];
+        i++;
+    }
+    delete actual->definicion; //borramos su significado
+    actual->definicion = nullptr;
+    while (actual->padre != nullptr){ //empezamos a subir
+        Nodo* pad = actual->padre;
+        if (esNodoInutil(actual)){ //si encontramos un nodo inutil lo borramos y seguimos subiendo
+            for (int k = 0; k < tamAlf; k++){
+                if (pad->siguientes[k] == actual){
+                    pad->siguientes[k] = nullptr;
+                }
+            }
+            delete actual;
+        }
+        actual = pad;
+    }
 }
 
 template <typename T>
@@ -134,3 +150,23 @@ void string_map<T>::insert(const pair<string, T>& elem){
     }
     actual->definicion = def; //agregamos en su definicion el significado
 };
+
+template <typename T>
+bool string_map<T>::esNodoInutil(string_map::Nodo *elem) {
+    bool res = false;
+    Nodo* hijo;
+    int hijos = 0;
+    for(int i = 0; i < tamAlf; i++){ //contamos cuantos hijos tiene
+        if(elem->siguientes[i] != nullptr){
+            hijos++;
+            hijo = elem->siguientes[i];
+        }
+    }
+    bool def = elem->definicion != nullptr; // vemos si el nodo tiene un significado
+    if (hijos > 1){
+        res = false;
+    } else if (hijos == 0 && !def || hijos == 1 && esNodoInutil(hijo)){
+        res = true;
+    }
+    return res;
+}

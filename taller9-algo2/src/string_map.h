@@ -98,6 +98,8 @@ private:
 
     Nodo* copiar (Nodo* elem, Nodo* padre);
 
+    bool esNodoInutil (Nodo* elem);
+
     Nodo* raiz;
     int _size;
 };
