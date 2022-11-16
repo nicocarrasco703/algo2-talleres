@@ -18,7 +18,7 @@ typename string_map<T>::Nodo* string_map<T>::copiar(string_map::Nodo *elem, stri
 }
 
 template <typename T>
-string_map<T>::string_map() : raiz(nullptr), _size(0){
+string_map<T>::string_map() : raiz(new Nodo(nullptr)), _size(0){
 }
 
 template <typename T>
@@ -76,7 +76,8 @@ const T& string_map<T>::at(const string& clave) const {
         i++;
 
     }
-    return *actual->definicion;
+    const T res = actual->definicion;
+    return res;
 }
 
 template <typename T>
@@ -110,10 +111,10 @@ bool string_map<T>::empty() const{
 
 template <typename T>
 void string_map<T>::insert(const pair<string, T>& elem){
-/*    if (raiz == nullptr){ // si el trie no tiene raiz la creamos
+    if (raiz == nullptr){ // si el trie no tiene raiz la creamos
         Nodo* nuevo = new Nodo(nullptr);
         raiz = nuevo;
-    }*/
+    }
     Nodo* actual = raiz;
     string clave = elem.first; //guardamos la clave para insertarla
     T* def = new T(elem.second); //creamos un puntero con el significado de la clave que queremos insertar
@@ -121,9 +122,7 @@ void string_map<T>::insert(const pair<string, T>& elem){
     while(i < clave.size()){
         int caracter = clave[i];
         if (actual->siguientes[caracter] == nullptr){ // si no habia un puntero al proximo caracter lo creamos y entramos
-            Nodo* nuevo = new Nodo(actual);
-            actual->siguientes[caracter] = nuevo;
-            actual = nuevo;
+            actual->siguientes[caracter] = new Nodo(actual);
         }
         actual = actual->siguientes[caracter];
         i++;
