@@ -1,6 +1,24 @@
+// Nombre: Andrés Nicolas Carrasco
+// LU: 1905/21
+
+template <typename T>
+typename string_map<T>::Nodo* string_map<T>::copiar(string_map::Nodo *elem, string_map::Nodo *padre) {
+    T* def = nullptr;
+    if (elem->definicion != nullptr){ //si el significado del nodo a copiar estaba definido la copiamos
+        def = new T(*elem->definicion);
+    }
+    Nodo* copia = new Nodo(def, padre); // creamos un nuevo nodo con el significado del nodo a copiar y su padre
+    copia->siguientes = elem->siguientes; // copiamos los siguientes del nodo a copiar
+    for(int i = 0; i < tamAlf; i++){ //copiamos los hijos del nodo a copiar
+        if (copia->siguientes[i] != nullptr){
+            copia->siguientes[i] = copiar(copia->siguientes[i], copia);
+        }
+    }
+    return copia;
+}
+
 template <typename T>
 string_map<T>::string_map() : raiz(nullptr), _size(0){
-    // COMPLETAR
 }
 
 template <typename T>
@@ -8,7 +26,11 @@ string_map<T>::string_map(const string_map<T>& aCopiar) : string_map() { *this =
 
 template <typename T>
 string_map<T>& string_map<T>::operator=(const string_map<T>& d) {
-    // COMPLETAR
+    Nodo* nodoraiz = copiar(d.raiz, nullptr);
+    int tam = d._size;
+    this->raiz = nodoraiz;
+    this->_size = tam;
+    return *this;
 }
 
 template <typename T>
@@ -18,7 +40,7 @@ string_map<T>::~string_map(){
 
 template <typename T>
 T& string_map<T>::operator[](const string& clave){
-    // COMPLETAR
+    this->at(clave);
 }
 
 
@@ -54,8 +76,7 @@ const T& string_map<T>::at(const string& clave) const {
         i++;
 
     }
-    const T res = actual->definicion;
-    return res;
+    return *actual->definicion;
 }
 
 template <typename T>
@@ -68,9 +89,8 @@ T& string_map<T>::at(const string& clave) {
             actual = actual->siguientes[caracter];
         }
         i++;
-
     }
-    return actual->definicion;
+    return *actual->definicion;
 }
 
 template <typename T>
@@ -90,24 +110,28 @@ bool string_map<T>::empty() const{
 
 template <typename T>
 void string_map<T>::insert(const pair<string, T>& elem){
-    if (raiz == nullptr){ // si el trie no tiene raiz la creamos
-        Nodo* nuevo = new Nodo();
+/*    if (raiz == nullptr){ // si el trie no tiene raiz la creamos
+        Nodo* nuevo = new Nodo(nullptr);
         raiz = nuevo;
-    }
+    }*/
     Nodo* actual = raiz;
-    string clave = get<0>(elem); //guardamos la clave para insertarla
-    T significado = get<1>(elem); //guardamos el significado
+    string clave = elem.first; //guardamos la clave para insertarla
+    T* def = new T(elem.second); //creamos un puntero con el significado de la clave que queremos insertar
     int i = 0;
     while(i < clave.size()){
         int caracter = clave[i];
         if (actual->siguientes[caracter] == nullptr){ // si no habia un puntero al proximo caracter lo creamos y entramos
-            Nodo* nuevo = new Nodo();
+            Nodo* nuevo = new Nodo(actual);
             actual->siguientes[caracter] = nuevo;
             actual = nuevo;
-        } else { //si ya existia entramos
-            actual = actual->siguientes[caracter];
         }
+        actual = actual->siguientes[caracter];
         i++;
     }
-    actual->definicion = significado; //salimos del ciclo al llegar al nodo de la ultima letra y agregamos en su definicion el significado
+    if (actual->definicion == nullptr){
+        _size++; //si no estaba definido, aumentamos el tamaño del trie
+    } else {
+        delete actual->definicion; // si ya estaba definido, borramos el puntero al significado antiguo
+    }
+    actual->definicion = def; //agregamos en su definicion el significado
 };

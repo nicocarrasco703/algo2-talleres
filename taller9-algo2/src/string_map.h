@@ -5,6 +5,8 @@
 
 using namespace std;
 
+const static int tamAlf = 256;
+
 template<typename T>
 class string_map {
 public:
@@ -83,11 +85,18 @@ private:
     struct Nodo {
         vector<Nodo*> siguientes;
         T* definicion;
-        Nodo() : siguientes(256, nullptr),
-                 definicion(nullptr) {}
-        Nodo(T* def) : siguientes(256, nullptr),
-                       definicion(def) {}
+        Nodo* padre;
+
+
+        Nodo(Nodo* pad) : siguientes(tamAlf, nullptr),
+                            definicion(nullptr),
+                            padre(pad){}
+        Nodo(T* def, Nodo* pad) : siguientes(tamAlf, nullptr),
+                                    definicion(def),
+                                    padre(pad){}
     };
+
+    Nodo* copiar (Nodo* elem, Nodo* padre);
 
     Nodo* raiz;
     int _size;
