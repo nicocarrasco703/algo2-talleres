@@ -35,7 +35,18 @@ string_map<T>& string_map<T>::operator=(const string_map<T>& d) {
 
 template <typename T>
 string_map<T>::~string_map(){
-    // COMPLETAR
+    destruir(raiz);
+}
+
+template <typename T>
+void string_map<T>::destruir(string_map::Nodo* elem) {
+    if(elem != nullptr){
+        delete elem->definicion;
+        for (int i = 0; i < tamAlf; i++){
+            destruir(elem->siguientes[i]);
+        }
+        delete elem;
+    }
 }
 
 template <typename T>
@@ -74,8 +85,7 @@ const T& string_map<T>::at(const string& clave) const {
         i++;
 
     }
-    const T res = actual->definicion;
-    return res;
+    return *actual->definicion;
 }
 
 template <typename T>
@@ -87,6 +97,10 @@ T& string_map<T>::at(const string& clave) {
         actual = actual->siguientes[caracter];
         i++;
     }
+    if (actual->definicion == nullptr) {
+        actual->definicion = new T();
+    }
+
     return *actual->definicion;
 }
 
@@ -127,10 +141,6 @@ bool string_map<T>::empty() const{
 
 template <typename T>
 void string_map<T>::insert(const pair<string, T>& elem){
-    if (raiz == nullptr){ // si el trie no tiene raiz la creamos
-        Nodo* nuevo = new Nodo(nullptr);
-        raiz = nuevo;
-    }
     Nodo* actual = raiz;
     string clave = elem.first; //guardamos la clave para insertarla
     T* def = new T(elem.second); //creamos un puntero con el significado de la clave que queremos insertar

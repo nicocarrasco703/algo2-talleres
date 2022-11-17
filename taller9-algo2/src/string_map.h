@@ -100,6 +100,8 @@ private:
 
     bool esNodoInutil (Nodo* elem);
 
+    void destruir(Nodo*);
+
     Nodo* raiz;
     int _size;
 };
