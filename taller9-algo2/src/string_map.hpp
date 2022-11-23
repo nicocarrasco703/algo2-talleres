@@ -26,11 +26,12 @@ string_map<T>::string_map(const string_map<T>& aCopiar) : string_map() { *this =
 
 template <typename T>
 string_map<T>& string_map<T>::operator=(const string_map<T>& d) {
+    destruir(raiz);
     Nodo* nodoraiz = copiar(d.raiz, nullptr);
     int tam = d._size;
     this->raiz = nodoraiz;
     this->_size = tam;
-    return *this;
+    //return *this;
 }
 
 template <typename T>
@@ -62,7 +63,7 @@ int string_map<T>::count(const string& clave) const{
     if (raiz != nullptr){  // si existe raiz empezamos buscando
         actual = raiz;
         while(i < clave.size()) {
-            int caracter = clave[i]; //tomamos un caracter
+            int caracter = int(clave[i]); //tomamos un caracter
             if (actual->siguientes[caracter] != nullptr) { // si el puntero al siguiente caracter es no nulo pasamos a ese
                 actual = actual->siguientes[caracter];
             }else{
@@ -80,7 +81,7 @@ const T& string_map<T>::at(const string& clave) const {
     Nodo* actual = raiz;
     int i = 0;
     while(i < clave.size()){
-        int caracter = clave[i];
+        int caracter = int(clave[i]);
         actual = actual->siguientes[caracter];
         i++;
 
@@ -93,7 +94,7 @@ T& string_map<T>::at(const string& clave) {
     Nodo* actual = raiz;
     int i = 0;
     while(i < clave.size()){
-        int caracter = clave[i];
+        int caracter = int(clave[i]);
         actual = actual->siguientes[caracter];
         i++;
     }
@@ -109,7 +110,7 @@ void string_map<T>::erase(const string& clave) {
     Nodo* actual = raiz;
     int i = 0;
     while(i < clave.size()){ //buscamos el nodo a borrar
-        int caracter = clave[i];
+        int caracter = int(clave[i]);
         actual = actual->siguientes[caracter];
         i++;
     }
@@ -146,7 +147,7 @@ void string_map<T>::insert(const pair<string, T>& elem){
     T* def = new T(elem.second); //creamos un puntero con el significado de la clave que queremos insertar
     int i = 0;
     while(i < clave.size()){
-        int caracter = clave[i];
+        int caracter = int(clave[i]);
         if (actual->siguientes[caracter] == nullptr){ // si no habia un puntero al proximo caracter lo creamos y entramos
             actual->siguientes[caracter] = new Nodo(actual);
         }
